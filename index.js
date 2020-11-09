@@ -9,59 +9,59 @@ let history;
 let currentScore;
 let theNumber;
 
-SetMessage(`Guess a number between 0 and ${difficulty}!`)
-Restart();
+setMessage(`Guess a number between 0 and ${difficulty}!`)
+restart();
 
-function Restart(){
-    history = new Array(0);
+function restart(){
+    history = [];
     currentScore = 0;
-    theNumber = RandomInt(difficulty);
+    theNumber = randomInt(difficulty);
 }
 
 document.addEventListener("keyup", function(event){
     if (event.key == 'Enter'){
         currentScore++;
-        let guess = GetUserInput();
+        let guess = getUserInput();
         let color;
         
-        ClearInput();
+        clearInput();
 
         if (guess < theNumber){
-            SetMessage('Too Low!');
+            setMessage('Too Low!');
             color = 'red';
         } else if (guess > theNumber){
-            SetMessage('Too High!');
+            setMessage('Too High!');
             color = 'green';
         }else{
-            SetMessage('You Win!');
-            UpdateScore();
-            Restart();
+            setMessage('You Win!');
+            updateScore();
+            restart();
             return;
         }
         
-        UpdateHistory(`<span style = "color: ${color}">${guess}</span>`);
+        updateHistory(`<span style = "color: ${color}">${guess}</span>`);
     }
 })
 
-function GetUserInput(){
+function getUserInput(){
     return parseInt(inputField.value);
 }
-function SetMessage(msg){
+function setMessage(msg){
     message.innerHTML = msg;
 }   
-function ClearInput(){
+function clearInput(){
     inputField.value = '';
 }
-function UpdateScore(){
+function updateScore(){
     if (currentScore < highscore){
         highscore = currentScore;
     }
-    score.innerHTML = highscore;
+    score.innerHTML = "highscore: " + highscore;
 }
-function UpdateHistory(element){
+function updateHistory(element){
     history.unshift(element); 
     guesses.innerHTML = history.join('<br>');
 }
-function RandomInt(max){
+function randomInt(max){
     return Math.floor(Math.random() * (max + 1));
 }
